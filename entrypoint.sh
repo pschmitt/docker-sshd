@@ -1,6 +1,10 @@
 #!/usr/bin/env ash
 
-# set -x
+DEBUG="${DEBUG}"
+if [ -n "$DEBUG" ]
+then
+  set -x
+fi
 
 SSHD_PORT="${SSHD_PORT:-22}"
 HOST_KEYS_DIR="${HOST_KEYS_DIR:-/config/host-keys}"
