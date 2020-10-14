@@ -72,9 +72,8 @@ update_authorized_keys() {
   local auth_keys
   local home
   local ssh_dir
-  local user=root
 
-  home="$(get_user_home "${user}")"
+  home="$(get_user_home "${USER_NAME}")"
   ssh_dir="${home}/.ssh"
   auth_keys="${ssh_dir}/authorized_keys"
 
@@ -100,7 +99,7 @@ update_authorized_keys() {
     fi
   fi
 
-  chown -R "$user" "$ssh_dir"
+  chown -R "$USER_NAME" "$ssh_dir"
   chmod 600 "$auth_keys" 2>/dev/null
 }
 
@@ -119,7 +118,7 @@ update_user() {
 }
 
 update_sshd_config
-update_authorized_keys
 update_user "$USER_NAME" "$PASSWORD"
+update_authorized_keys
 
 /usr/sbin/sshd -D -e -p "$SSHD_PORT"
