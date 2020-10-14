@@ -8,7 +8,7 @@ fi
 
 SSHD_PORT="${SSHD_PORT:-22}"
 HOST_KEYS_DIR="${HOST_KEYS_DIR:-/config/host-keys}"
-USER_NAME="${USER_NAME:-root}"
+USERNAME="${USERNAME:-root}"
 PASSWORD="${PASSWORD}"
 
 mkdir -p "$HOST_KEYS_DIR"
@@ -45,7 +45,7 @@ update_sshd_config() {
     sshd_config_set "PermitRootLogin" "$PERMIT_ROOT_LOGIN"
   fi
 
-  if [ "$USER_NAME" != "root" ] && [ -n "$PASSWORD" ]
+  if [ "$USERNAME" != "root" ] && [ -n "$PASSWORD" ]
   then
     sshd_config_set PasswordAuthentication yes
   fi
@@ -77,7 +77,7 @@ update_authorized_keys() {
   local home
   local ssh_dir
 
-  home="$(get_user_home "${USER_NAME}")"
+  home="$(get_user_home "${USERNAME}")"
   ssh_dir="${home}/.ssh"
   auth_keys="${ssh_dir}/authorized_keys"
 
@@ -103,7 +103,7 @@ update_authorized_keys() {
     fi
   fi
 
-  chown -R "$USER_NAME" "$ssh_dir"
+  chown -R "$USERNAME" "$ssh_dir"
   chmod 600 "$auth_keys" 2>/dev/null
 }
 
@@ -122,7 +122,7 @@ update_user() {
 }
 
 update_sshd_config
-update_user "$USER_NAME" "$PASSWORD"
+update_user "$USERNAME" "$PASSWORD"
 update_authorized_keys
 
 /usr/sbin/sshd -D -e -p "$SSHD_PORT"

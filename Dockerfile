@@ -12,7 +12,7 @@ EXPOSE 22/tcp
 
 ENV SSHD_PORT=22 \
     HOST_KEYS_DIR=/config/host-keys \
-    USER_NAME=root \
+    USERNAME=root \
     PASSWORD= \
     AUTHORIZED_KEYS= \
     GITHUB_USERNAME= \
