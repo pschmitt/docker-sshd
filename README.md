@@ -1,5 +1,7 @@
 # Docker service for SSHD
 
+[![Build](https://github.com/pschmitt/docker-sshd/workflows/Build/badge.svg)](https://github.com/pschmitt/docker-sshd/actions?query=workflow%3ABuild)
+
 ## Thanks
 
 This is loosely based, or inspired by [linuxserver/ssh-server](https://github.com/linuxserver/docker-openssh-server).
