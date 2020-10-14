@@ -1,6 +1,7 @@
 # Docker service for SSHD
 
 [![Build](https://github.com/pschmitt/docker-sshd/workflows/Build/badge.svg)](https://github.com/pschmitt/docker-sshd/actions?query=workflow%3ABuild)
+[![Docker](https://img.shields.io/docker/pulls/pschmitt/sshd)](https://hub.docker.com/u/pschmitt/sshd)
 
 ## Thanks
 
