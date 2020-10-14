@@ -78,14 +78,30 @@ update_authorized_keys() {
   ssh_dir="${home}/.ssh"
   auth_keys="${ssh_dir}/authorized_keys"
 
+  mkdir -p "$ssh_dir"
+
   if [ -n "$AUTHORIZED_KEYS" ]
   then
-    mkdir -p "$ssh_dir"
+    echo "Adding authorized_keys" >&2
     # shellcheck disable=2169
     echo -e "${AUTHORIZED_KEYS}" > "$auth_keys"
-    chown -R "$user" "$ssh_dir"
-    chmod 600 "$auth_keys"
   fi
+
+  if [ "$GITHUB_USERNAME" ]
+  then
+    echo "Fetching authorized_keys from GitHub for ${GITHUB_USERNAME}" >&2
+    local keys
+    keys="$(curl -fsSL "https://github.com/${GITHUB_USERNAME}.keys")"
+    if echo "$keys" | grep -qE "^ssh-"
+    then
+      echo "$keys" >> "$auth_keys"
+    else
+      echo "Received invalid keys from GitHub: $keys" >&2
+    fi
+  fi
+
+  chown -R "$user" "$ssh_dir"
+  chmod 600 "$auth_keys" 2>/dev/null
 }
 
 update_user() {
