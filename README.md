@@ -1,0 +1,30 @@
+# Docker service for SSHD
+
+## Thanks
+
+This is loosely based, or inspired by [linuxserver/ssh-server](https://github.com/linuxserver/docker-openssh-server).
+
+## What's the point?
+
+The main difference is that running as root is allowed, for SSHFS among others.
+
+Also you can set the port the SSH daemon listens on **inside the container**, 
+which may come in handy if you use this container as a way to debug a pod 
+running on the host network namespace (if you blindly listen on 22/tcp you 
+may end up superseding the host's SSH service - which you probably don't 
+want to, ever.).
+
+## Usage
+
+```shell
+docker run -ti --rm \
+  -v $PWD/config:/config \
+  -p 22222:22222/tcp \
+  -e SSHD_PORT=22222 \
+  -e AUTHORIZED_KEYS="ssh-ed25519 XXX" \
+  -e GITHUB_USERNAME="pschmitt" \
+  -e USERNAME="root" \
+  -e PASSWORD="somethingImpossibleToRemember" \
+  -e PERMIT_ROOT_LOGIN="yes" \
+  pschmitt/sshd
+```
