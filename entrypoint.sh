@@ -116,8 +116,22 @@ update_user() {
   if [ "$user" != "root" ]
   then
     echo "Creating user $user" >&2
-    adduser -D -u "$PUID" "$user"
-    groupmod -o -g "$PGID" "$user"
+
+    if [ "$PUID" = "0" ]
+    then
+      echo "Please set the username to root explicitly if you want to use UID 0." >&2
+      return 2
+    else
+      adduser -D -u "$PUID" "$user"
+    fi
+
+    if [ "$PGID" = "0" ]
+    then
+      echo "Please set the username to root explicitly if you want to use GID 0." >&2
+      return 2
+    else
+      groupmod -o -g "$PGID" "$user"
+    fi
   fi
 
   echo "Updating user password for $user" >&2
