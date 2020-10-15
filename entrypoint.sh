@@ -10,6 +10,8 @@ SSHD_PORT="${SSHD_PORT:-22}"
 HOST_KEYS_DIR="${HOST_KEYS_DIR:-/config/host-keys}"
 USERNAME="${USERNAME:-root}"
 PASSWORD="${PASSWORD}"
+PUID="${PUID:-1000}"
+PGID="${PGID:-1000}"
 
 mkdir -p "$HOST_KEYS_DIR"
 
@@ -114,7 +116,8 @@ update_user() {
   if [ "$user" != "root" ]
   then
     echo "Creating user $user" >&2
-    adduser -D "$user"
+    adduser -D -u "$PUID" "$user"
+    groupmod -o -g "$PGID" "$user"
   fi
 
   echo "Updating user password for $user" >&2

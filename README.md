@@ -26,8 +26,10 @@ docker run -ti --rm \
   -e SSHD_PORT=22222 \
   -e AUTHORIZED_KEYS="ssh-ed25519 XXX" \
   -e GITHUB_USERNAME="pschmitt" \
-  -e USERNAME="root" \
+  -e USERNAME="user01" \
   -e PASSWORD="somethingImpossibleToRemember" \
-  -e PERMIT_ROOT_LOGIN="yes" \
+  -e PERMIT_ROOT_LOGIN="no" \
+  -e PUID="1000" \
+  -e PGID="1000" \
   pschmitt/sshd
 ```
