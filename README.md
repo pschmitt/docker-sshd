@@ -5,7 +5,7 @@
 
 ## Thanks
 
-This is loosely based, or inspired by [linuxserver/ssh-server](https://github.com/linuxserver/docker-openssh-server).
+This is loosely based on, or rather inspired by [linuxserver/ssh-server](https://github.com/linuxserver/docker-openssh-server).
 
 ## What's the point?
 
