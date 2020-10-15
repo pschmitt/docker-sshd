@@ -33,3 +33,9 @@ docker run -ti --rm \
   -e PGID="1000" \
   pschmitt/sshd
 ```
+
+Then, to connect using the example above - from the same machine:
+
+```shell
+ssh -p 22222 user01@localhost
+```
