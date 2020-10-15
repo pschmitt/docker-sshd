@@ -142,4 +142,6 @@ update_sshd_config
 update_user "$USERNAME" "$PASSWORD"
 update_authorized_keys
 
+# FIXME Why does prepending exec below make the container ignore ctrl-c when
+# running the foreground with "run -it"?
 /usr/sbin/sshd -D -e -p "$SSHD_PORT"
