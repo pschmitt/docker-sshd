@@ -76,18 +76,22 @@ get_user_home() {
 }
 
 update_dns_config() {
-  if [ -n "$DNS_NDOTS" ]
+  if [ -z "$DNS_NDOTS" ]
   then
-    if grep -q "options ndots:" /etc/resolv.conf
-    then
-      # FIXME Why can't we use sed -i here?
-      # sed: can't move '/etc/resolv.conf' to '/etc/resolv.confn': Resource busy
-      sed -r "s/^(options ndots:).*/\1${DNS_NDOTS}/" /etc/resolv.conf \
-        > /tmp/resolv.conf && \
-        mv /tmp/resolv.conf /etc/resolv.conf
-    else
-      echo "options ndots:${DNS_NDOTS}" >> /etc/resolv.conf
-    fi
+    return
+  fi
+
+  echo "Setting NDOTS value to ${DNS_NDOTS}" >&2
+
+  if grep -q "options ndots:" /etc/resolv.conf
+  then
+    # FIXME Why can't we use sed -i here?
+    # sed: can't move '/etc/resolv.conf' to '/etc/resolv.confn': Resource busy
+    sed -r "s/^(options ndots:).*/\1${DNS_NDOTS}/" /etc/resolv.conf \
+      > /tmp/resolv.conf && \
+      mv /tmp/resolv.conf /etc/resolv.conf
+  else
+    echo "options ndots:${DNS_NDOTS}" >> /etc/resolv.conf
   fi
 }
 
