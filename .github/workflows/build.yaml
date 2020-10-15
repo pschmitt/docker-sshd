@@ -34,5 +34,5 @@ jobs:
           use: true
 
       - name: Run the build script
-        id: build.sh
+        id: build
         run: ./build.sh
