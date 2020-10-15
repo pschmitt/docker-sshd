@@ -88,7 +88,7 @@ update_dns_config() {
     # FIXME Why can't we use sed -i here?
     # sed: can't move '/etc/resolv.conf' to '/etc/resolv.confn': Resource busy
     cp /etc/resolv.conf /etc/resolv.conf.orig
-    sed -r "s/^(options ndots:).*/\1${DNS_NDOTS}/" /etc/resolv.conf.bak \
+    sed -r "s/^(options ndots:).*/\1${DNS_NDOTS}/" /etc/resolv.conf.orig \
       > /etc/resolv.conf
   else
     echo "options ndots:${DNS_NDOTS}" >> /etc/resolv.conf
