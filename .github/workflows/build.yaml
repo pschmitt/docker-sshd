@@ -33,5 +33,6 @@ jobs:
           install: true
           use: true
 
-      - name: Available platforms
-        run: echo ${{ steps.buildx.outputs.platforms }}
+      - name: Run the build script
+        id: build.sh
+        run: ./build.sh
