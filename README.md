@@ -21,9 +21,9 @@ want to, ever.).
 
 ```shell
 docker run -ti --rm \
-  -v $PWD/config:/config \
-  -p 22222:22222/tcp \
-  -e SSHD_PORT=22222 \
+  -v "$PWD/config:/config" \
+  -p "22222:22222/tcp" \
+  -e SSHD_PORT="22222" \
   -e AUTHORIZED_KEYS="ssh-ed25519 XXX" \
   -e GITHUB_USERNAME="pschmitt" \
   -e USERNAME="user01" \
