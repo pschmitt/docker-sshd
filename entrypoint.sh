@@ -12,6 +12,7 @@ USERNAME="${USERNAME:-root}"
 PASSWORD="${PASSWORD}"
 PUID="${PUID:-1000}"
 PGID="${PGID:-1000}"
+DNS_NDOTS="${DNS_NDOTS}"
 
 mkdir -p "$HOST_KEYS_DIR"
 
@@ -72,6 +73,22 @@ get_user_home() {
     return 2
   fi
   getent passwd "$user" | cut -f6 -d:
+}
+
+update_dns_config() {
+  if [ -n "$DNS_NDOTS" ]
+  then
+    if grep -q "options ndots:" /etc/resolv.conf
+    then
+      # FIXME Why can't we use sed -i here?
+      # sed: can't move '/etc/resolv.conf' to '/etc/resolv.confn': Resource busy
+      sed -r "s/^(options ndots:).*/\1${DNS_NDOTS}/" /etc/resolv.conf \
+        > /tmp/resolv.conf && \
+        mv /tmp/resolv.conf /etc/resolv.conf
+    else
+      echo "options ndots:${DNS_NDOTS}" >> /etc/resolv.conf
+    fi
+  fi
 }
 
 update_authorized_keys() {
@@ -140,6 +157,7 @@ update_user() {
 
 update_sshd_config
 update_user "$USERNAME" "$PASSWORD"
+update_dns_config
 update_authorized_keys
 
 # FIXME Why does prepending exec below make the container ignore ctrl-c when

@@ -39,3 +39,20 @@ Then, to connect using the example above - from the same machine:
 ```shell
 ssh -p 22222 user01@localhost
 ```
+
+## Advanced usage
+
+If you need to set the DNS ndots value (which you may since this container is
+based on Alpine) you can so using the `DNS_NDOTS` env var.
+
+Example:
+
+```shell
+docker run -ti --rm \
+  -p "22222:22222/tcp" \
+  -e SSHD_PORT="22222" \
+  -e USERNAME="user01" \
+  -e PASSWORD="somethingImpossibleToRemember" \
+  -e DNS_NDOTS="1" \
+  pschmitt/sshd
+```
