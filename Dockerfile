@@ -1,6 +1,7 @@
 FROM alpine:latest
 
-RUN apk add --no-cache openssh-server openssh-sftp-server curl shadow
+RUN apk add --no-cache openssh-client openssh-server openssh-sftp-server \
+        curl shadow
 
 ADD entrypoint.sh /entrypoint.sh
 
