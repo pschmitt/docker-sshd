@@ -18,6 +18,7 @@ get_available_architectures() {
 
   docker buildx imagetools inspect --raw "${image}:${tag}" | \
     jq -r '.manifests[].platform | .os + "/" + .architecture + "/" + .variant' | \
+    grep -v "unknown/unknown" | \
     sed 's#/$##' | sort
 }
 
